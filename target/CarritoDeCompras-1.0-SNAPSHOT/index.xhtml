@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        Hello ! I'm Lindsay Lohan!
+        
+       <p:button value="Boton" icon="ui-icon-star">
+        <f:param name="productId" value="10" />
+    </p:button>
+        
+        <p:dataTable var="producto" value="#{productoBean.productos}">
+            <p:column headerText="Id">
+                <h:outputText value="#{producto.id}" />
+            </p:column>
+
+            <p:column headerText="Nombre">
+                <h:outputText value="#{producto.nombre}" />
+            </p:column>
+
+            <p:column headerText="Descripción">
+                <h:outputText value="#{producto.description}" />
+            </p:column>
+
+            <p:column headerText="Precio">
+                <h:outputText value="#{producto.precio}" />
+            </p:column>
+        </p:dataTable>
+    </h:body>
+</html>
+
