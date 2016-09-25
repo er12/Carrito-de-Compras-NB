@@ -9,5 +9,16 @@ and open the template in the editor.
 */
 
 body.login{
+    
     background-color: #ffdd99 ;
+    
+}
+
+html {
+    background-image: url("#{resource['images:cart.jpg']}");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position:center;
+    background-size: cover;
+    background-color: #ffdd99;
 }

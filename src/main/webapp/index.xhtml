@@ -6,37 +6,38 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Index para pruebas</title>
+        <h:outputStylesheet name="css/carrito.css"/>
     </h:head>
-    <h:body>
-       Carrito de compras
-
-        <h:form>            
-            <h:outputLink onclick="PF('logindlg').show();" title="login">
-                Log in
-            </h:outputLink>
+    <h:body class='login'>
+             
+        <h:form>   
+             <p:menubar>
+                <p:menuitem >Carrito de compras</p:menuitem>
+                <f:facet name="options">
+                     <p:commandButton value="Iniciar sesión" onclick="PF('logindlg').show();" title="login">
+                     </p:commandButton>
+                </f:facet>
+            </p:menubar>
+<!--     <p:outputLabel>Carrito de compras</p:outputLabel>-->
+           
 
             <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-            <p:dialog header="Login" widgetVar="dlg" resizable="false">
+            <p:dialog header="Login" widgetVar="logindlg" resizable="false">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="username" value="Username:" />
-                    <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
+                    <p:inputText id="username" value="#{loginBean.nombreUsuario}" required="true" label="username" />
 
                     <h:outputLabel for="password" value="Password:" />
-                    <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
+                    <p:password id="password" value="#{loginBean.contrasena}" required="true" label="password" />
 
                     <f:facet name="footer">
-                        <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}"
+                        <p:commandButton value="Login" update="growl" actionListener="#{loginBean.login}"
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </f:facet>  
                 </h:panelGrid>
             </p:dialog>
         </h:form>
-
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
     </h:body>
     <script type="text/javascript">
         function handleLoginRequest(xhr, status, args) {
