@@ -5,15 +5,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Index para pruebas</title>
     </h:head>
     <h:body>
         Hello ! I'm Lindsay Lohan!
-        
-       <p:button value="Boton" icon="ui-icon-star">
-        <f:param name="productId" value="10" />
-    </p:button>
-        
+
+        <p:button value="Boton" icon="ui-icon-star">
+            <f:param name="productId" value="10" />
+        </p:button>
+
         <p:dataTable var="producto" value="#{productoBean.productos}">
             <p:column headerText="Id">
                 <h:outputText value="#{producto.id}" />
@@ -31,6 +31,10 @@
                 <h:outputText value="#{producto.precio}" />
             </p:column>
         </p:dataTable>
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <br />
+        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
     </h:body>
 </html>
 
