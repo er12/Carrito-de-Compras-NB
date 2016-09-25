@@ -8,6 +8,41 @@
         <title>Login</title>
     </h:head>
     <h:body>
+         <p:menu>
+        <p:submenu label="Mi carrito">
+            <p:menuitem value="Ver mi carrito" id="movieBtn" value="Dynamic" update="messages" icon="fa-cart-plus" />
+            
+            
+              <p:overlayPanel id="moviePanel" for="movieBtn" hideEffect="fade" dynamic="true" style="width:600px">
+                    <p:dataTable var="movies" value="#{movieView.movieList}" rows="5" paginator="true">
+                        <p:column headerText="Movie">
+                            <h:outputText value="#{movies.movie}" />
+                        </p:column>
+
+                        <p:column headerText="Directed By">
+                            <h:outputText value="#{movies.directedBy}" />
+                        </p:column>
+
+                        <p:column headerText="Genres">
+                            <h:outputText value="#{movies.genres}" />
+                        </p:column>
+
+                        <p:column headerText="Run Time(min.)">
+                            <h:outputText value="#{movies.runTime}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:overlayPanel>
+            
+            
+        </p:submenu>
+        <p:submenu label="Compras">
+            <p:menuitem value="Compras realizadas" actionListener="#{menuView.delete}" update="messages" ajax="false" icon="fa-money"/>
+        </p:submenu>
+        <p:submenu label="Perfil">
+            <p:menuitem value="Achmed" url="https://www.youtube.com/watch?v=IL357BrwK7c" icon="ui-icon-home"/>
+            <p:menuitem value="Salir" outcome="login" icon="fa-sign-out"/>
+        </p:submenu>
+    </p:menu>
        
     </h:body>
 </html>

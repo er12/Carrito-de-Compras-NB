@@ -8,33 +8,46 @@
         <title>Index para pruebas</title>
     </h:head>
     <h:body>
-        Hello ! I'm Lindsay Lohan!
+       Carrito de compras
 
-        <p:button value="Boton" icon="ui-icon-star">
-            <f:param name="productId" value="10" />
-        </p:button>
+        <h:form>            
+            <h:outputLink onclick="PF('logindlg').show();" title="login">
+                Log in
+            </h:outputLink>
 
-        <p:dataTable var="producto" value="#{productoBean.productos}">
-            <p:column headerText="Id">
-                <h:outputText value="#{producto.id}" />
-            </p:column>
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-            <p:column headerText="Nombre">
-                <h:outputText value="#{producto.nombre}" />
-            </p:column>
+            <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
 
-            <p:column headerText="Descripción">
-                <h:outputText value="#{producto.description}" />
-            </p:column>
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
 
-            <p:column headerText="Precio">
-                <h:outputText value="#{producto.precio}" />
-            </p:column>
-        </p:dataTable>
+                    <f:facet name="footer">
+                        <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}"
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
         <br />
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
         <br />
         <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
     </h:body>
+    <script type="text/javascript">
+        function handleLoginRequest(xhr, status, args) {
+            if(args.validationFailed || !args.loggedIn) {
+                PF('dlg').jq.effect("shake", {times:5}, 100);
+            }
+            else {
+                PF('dlg').hide();
+                $('#loginLink').fadeOut();
+            }
+        }
+    </script>
 </html>
 
