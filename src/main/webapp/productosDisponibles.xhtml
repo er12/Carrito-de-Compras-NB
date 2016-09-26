@@ -5,19 +5,18 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Login</title>
+        <title>Productos</title>
     </h:head>
     <h:body style="background-color: #ffdd99 ">
         <h:form>  
             <p:growl id="messages"/>
-
             <p:menubar>
                 <p:menuitem >Carrito de compras</p:menuitem>
                 <f:facet name="dash" >  <!--rendered="#usuariosBean.isAdmin}"-->
                     <p:commandButton type="button" value="dashBoard" icon="fa-dashboard" />
                 </f:facet>
                 <f:facet name="options">
-                    <p:commandButton type="button" value="Cerrar sesión" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -39,40 +38,46 @@
                
                 <p:submenu label="Perfil">
                     <p:menuitem value="Achmed" url="https://www.youtube.com/watch?v=IL357BrwK7c" icon="ui-icon-home"/>
+                    <p:menuitem value="Crear/modificar" outcome="login" icon="fa-sign-out"/>
                     <p:menuitem value="Salir" outcome="login" icon="fa-sign-out"/>
                 </p:submenu>
             </p:menu>
         </h:form>
         <h:form>
     
-                          <p:dataTable var="producto" value="#{productoBean.productos}" rows="5" paginator="true">
-                                
-                              <p:column headerText="Id">
-                                    <h:outputText value="#{producto.id}" />
-                                </p:column>
-                              
-                                <p:column headerText="Nombre">
-                                    <h:outputText value="#{producto.nombre}" />
-                                </p:column>
+        <p:dataTable var="producto" value="#{productoBean.productos}" rows="5" paginator="true">
 
-                                <p:column headerText="Descripción">
-                                    <h:outputText value="#{producto.description}" />
-                                </p:column>
+            <p:column headerText="Id">
+                  <h:outputText value="#{producto.id}" />
+              </p:column>
 
-                                <p:column headerText="Cantidad">
-                                    <h:outputText value="#{producto.cantidad}" />
-                                </p:column>
+              <p:column headerText="Nombre">
+                  <h:outputText value="#{producto.nombre}" />
+              </p:column>
 
-                                <p:column headerText="Precio">
-                                    <h:outputText value="#{producto.precio}" />
-                                </p:column>
-                              <p:column style="width:32px;text-align: center">
-                                    <p:commandButton update=":form:carDetail" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
-                                       <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
-                                   </p:commandButton>
-                               </p:column>
-                            </p:dataTable>
-         
+              <p:column headerText="Descripción">
+                  <h:outputText value="#{producto.description}" />
+              </p:column>
+
+              <p:column headerText="Cantidad">
+                  <h:outputText value="#{producto.cantidad}" />
+              </p:column>
+
+              <p:column headerText="Precio">
+                  <h:outputText value="#{producto.precio}" />
+              </p:column>
+            <p:column style="width:32px;text-align: center">
+                  <p:commandButton update=":form:carDetail" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
+                     <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
+                 </p:commandButton>
+             </p:column>
+            <p:column style="width:32px;text-align: center">
+                  <p:commandButton update=":form:carDetail" icon="fa-cart-plus" title="View">
+                     <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
+                 </p:commandButton>
+             </p:column>
+          </p:dataTable>
+
 
         </h:form>
        

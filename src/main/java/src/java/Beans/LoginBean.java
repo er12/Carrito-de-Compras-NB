@@ -6,6 +6,7 @@
 package src.java.Beans;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import modelo.Usuario;
 
 import javax.enterprise.context.SessionScoped;
@@ -13,6 +14,8 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -74,17 +77,27 @@ public class LoginBean implements Serializable {
         if (nombreUsuario != null && nombreUsuario.equals("admin") && contrasena != null
             && contrasena.equals("admin")) {
             loggedIn = true;
+            logeado = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", nombreUsuario);
             return "productosDisponibles";
         } else {
             loggedIn = false;
+            logeado = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales inválidos" );
         }
+        
          
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
         return null;
        
+  }
+     public String cerrarSesion() {
+     
+        logeado = false;
+        System.out.println("logeado es :"+ logeado);
+        return "index.xhtml";
+             
   }
     
 }
