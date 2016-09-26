@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 
 
 /**
@@ -20,16 +21,17 @@ public class UsuariosBean implements Serializable {
     private int id;
     private String nombreUsuario;
     private String contrasena;
-    private boolean admin;
-
-    public UsuariosBean(){
-        Usuario admin = new Usuario();
-        usuariosRegistrados = new ArrayList<Usuario>();
-        admin.setId(1);
-        admin.setAdmin(true);
-        admin.setContrasena("admin");
-        admin.setNombreUsuario("admin");
-        usuariosRegistrados.add(admin);
+    private boolean isAdmin;
+    
+    @PostConstruct
+    public void init(){
+         Usuario admin = new Usuario();
+         usuariosRegistrados = new ArrayList<Usuario>();
+         admin.setId(1);
+         admin.setAdmin(true);
+         admin.setContrasena("admin");
+         admin.setNombreUsuario("admin");
+         usuariosRegistrados.add(admin);
     }
 
     public List<Usuario> getUsuariosRegistrados() {
@@ -64,12 +66,12 @@ public class UsuariosBean implements Serializable {
         this.contrasena = contrasena;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public boolean isIsAdmin() {
+        return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
 
@@ -86,7 +88,7 @@ public class UsuariosBean implements Serializable {
         nuevo.setId(usuariosRegistrados.size() + 1);
         nuevo.setNombreUsuario(nombreUsuario);
         nuevo.setContrasena(contrasena);
-        nuevo.setAdmin(admin);
+        nuevo.setAdmin(isAdmin);
         usuariosRegistrados.add(nuevo);
         return retorno;
     }

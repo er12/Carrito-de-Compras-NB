@@ -13,16 +13,21 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author Ernesto
  */
 @ManagedBean(name = "loginBean")
-@SessionScoped
+@RequestScoped
 public class LoginBean implements Serializable {
      private String nombreUsuario;
     private String contrasena;
+    private boolean logeado;
 
     public LoginBean()
     {
@@ -49,27 +54,37 @@ public class LoginBean implements Serializable {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    
-    
-    public void login(ActionEvent actionEvent) {
-    /*RequestContext context = RequestContext.getCurrentInstance();
-    FacesMessage msg = null;
-    if (nombre != null && nombre.equals("admin") && clave != null
-        && clave.equals("admin")) {
-      logeado = true;
-      msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", nombre);
-    } else {
-      logeado = false;
-      msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error",
-                             "Credenciales no válidas");
+
+    public boolean isLogeado() {
+        return logeado;
     }
 
-    FacesContext.getCurrentInstance().addMessage(null, msg);
-    context.addCallbackParam("estaLogeado", logeado);
-    if (logeado)
-      context.addCallbackParam("view", "gauge.xhtml");
-*/
-  }
+    public void setLogeado(boolean logeado) {
+        this.logeado = logeado;
+    }
     
+    
+    
+    public String iniciarSesion() {
+     
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage message = null;
+        boolean loggedIn = false;
+         
+        if (nombreUsuario != null && nombreUsuario.equals("admin") && contrasena != null
+            && contrasena.equals("admin")) {
+            loggedIn = true;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", nombreUsuario);
+            return "productosDisponibles";
+        } else {
+            loggedIn = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Credenciales inválidos" );
+        }
+         
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        context.addCallbackParam("loggedIn", loggedIn);
+        return null;
+       
+  }
     
 }

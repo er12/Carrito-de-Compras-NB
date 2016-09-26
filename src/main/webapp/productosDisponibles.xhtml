@@ -7,13 +7,15 @@
     <h:head>
         <title>Login</title>
     </h:head>
-    <h:body>
+    <h:body style="background-color: #ffdd99 ">
         <h:form>  
             <p:growl id="messages"/>
 
             <p:menubar>
                 <p:menuitem >Carrito de compras</p:menuitem>
-                
+                <f:facet name="dash" >  <!--rendered="#usuariosBean.isAdmin}"-->
+                    <p:commandButton type="button" value="dashBoard" icon="fa-dashboard" />
+                </f:facet>
                 <f:facet name="options">
                     <p:commandButton type="button" value="Cerrar sesión" icon="ui-icon-extlink" />
                 </f:facet>
@@ -23,15 +25,18 @@
         <h:form>
             <p:menu>
                 <p:submenu label="Mi carrito">
-                    <p:menuitem value="Ver mi carrito" id="productos" icon="fa-cart-plus" />
-
-
-                      
+                    <p:menuitem value="Ver mi carrito" id="verCarrito" outcome="mostrarCarroCompra"  icon="fa-cart-plus" />
 
                 </p:submenu>
-                <p:submenu label="Compras">
-                    <p:menuitem value="Compras realizadas"  ajax="false" icon="fa-money"/>
-                </p:submenu>
+                
+                    <p:submenu label="Compras">                    
+                        <p:menuitem value="Historial de compras"  ajax="false" outcome="historialCompras" icon="fa-history"/>
+                    </p:submenu>
+
+                    <p:submenu label="Productos">                    
+                        <p:menuitem value="Crear/modificar"  ajax="false" icon="fa-edit"/>
+                    </p:submenu>
+               
                 <p:submenu label="Perfil">
                     <p:menuitem value="Achmed" url="https://www.youtube.com/watch?v=IL357BrwK7c" icon="ui-icon-home"/>
                     <p:menuitem value="Salir" outcome="login" icon="fa-sign-out"/>
@@ -61,6 +66,11 @@
                                 <p:column headerText="Precio">
                                     <h:outputText value="#{producto.precio}" />
                                 </p:column>
+                              <p:column style="width:32px;text-align: center">
+                                    <p:commandButton update=":form:carDetail" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
+                                       <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
+                                   </p:commandButton>
+                               </p:column>
                             </p:dataTable>
          
 
