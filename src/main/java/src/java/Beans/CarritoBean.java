@@ -6,7 +6,7 @@
 package src.java.Beans;
 
 import java.util.List;
-import modelo.Usuario;
+import src.java.modelo.Usuario;
 import src.java.modelo.Producto;
 
 /**
