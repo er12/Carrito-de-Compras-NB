@@ -8,7 +8,7 @@
         <title>Productos</title>
     </h:head>
     <h:body style="background-color: #ffdd99 ">
-        <h:form>  
+            <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
                 <p:menuitem >Carrito de compras</p:menuitem>
@@ -16,7 +16,7 @@
                     <p:commandButton type="button" value="dashBoard" icon="fa-dashboard" />
                 </f:facet>
                 <f:facet name="options">
-                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{usuariosBean.borrarUsuario()}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -33,7 +33,8 @@
                     </p:submenu>
 
                     <p:submenu label="Productos">                    
-                        <p:menuitem value="Crear/modificar"  ajax="false" icon="fa-edit"/>
+                        <p:menuitem value="Crear"  ajax="false" icon="fa-edit" outcome="agregarProductos"/>
+                        <p:menuitem value="Modificar"  ajax="false" icon="fa-edit" outcome="modificarProductos"/>
                     </p:submenu>
                
                 <p:submenu label="Perfil">

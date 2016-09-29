@@ -27,13 +27,13 @@
             <p:dialog header="Login" widgetVar="logindlg" resizable="false">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel for="username" value="Username:" />
-                    <p:inputText id="username" value="#{loginBean.nombreUsuario}" required="true" label="Nombre de Usuario" />
+                    <p:inputText id="username" value="#{usuariosBean.nombreUsuario}" required="true" label="Nombre de Usuario" />
 
                     <h:outputLabel for="password" value="Contraseña:" />
-                    <p:password id="password" value="#{loginBean.contrasena}" required="true" label="Contraseña" />
+                    <p:password id="password" value="#{usuariosBean.contrasena}" required="true" label="Contraseña" />
 
                     <f:facet name="footer">
-                        <p:commandButton value="Login" update="growl" action="#{loginBean.iniciarSesion}"
+                        <p:commandButton value="Login" update="growl" action="#{usuariosBean.verificarUsuario}"
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </f:facet>  
                 </h:panelGrid>
