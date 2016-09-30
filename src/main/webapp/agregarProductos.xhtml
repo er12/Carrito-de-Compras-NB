@@ -32,7 +32,7 @@
                                                                        value="#{productoBean.description}" maxlength="30" counterTemplate="{0} caracteres restantes." autoResize="false" />
                 <h:outputText id="display" />
                 <h:outputLabel for="precio" value="Precio: " />
-                <p:inputNumber id="precio" value="0.0" symbol="RD $" symbolPosition="p" 
+                <p:inputNumber id="precio" value="#{productoBean.precio}" symbol="RD $" symbolPosition="p" 
                                decimalSeparator="." thousandSeparator=",">  
                 </p:inputNumber>
                 
@@ -40,7 +40,7 @@
                 <p:spinner id="minMax" value="#{productoBean.cantidad}" min="0" max="100" /><br/>
                 
                 
-                <p:commandButton value="Crear" id="nonAjax" actionListener="#{buttonView.buttonAction}" ajax="false" />
+                <p:commandButton value="Crear" id="nonAjax" action="#{productoBean.agregarProducto()}" ajax="false" />
 
                 
                 <!--<h:outputText value="Basic: " />

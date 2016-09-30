@@ -1,5 +1,6 @@
 package src.java.Beans;
 
+
 /**
  * Created by edmildimassimo on 9/22/16.
  */
@@ -8,6 +9,7 @@ package src.java.Beans;
  * @author Ernesto
  */
 
+import helper.*;
 import modelo.Producto;
 
 import javax.enterprise.context.SessionScoped;
@@ -15,19 +17,27 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.EJB;
 
 @ManagedBean(name = "productoBean")
 @SessionScoped
 public class ProductosBean implements Serializable{
     private List<Producto> productos;
     private int id;
+    private int ids = 0;
     private String nombre;
     private String description;
     private int cantidad;
     private double precio;
+    
+    
+    @EJB
+    private Tienda tienda;
 
     public ProductosBean(){
+        
         productos = new ArrayList<Producto>();
+        
     }
 
     public List<Producto> getProductos() {
@@ -79,14 +89,12 @@ public class ProductosBean implements Serializable{
     }
 
     public String agregarProducto(){
-        Producto nuevo = new Producto();
-        nuevo.setId(id);
-        nuevo.setCantidad(cantidad);
-        nuevo.setDescription(description);
-        nuevo.setNombre(nombre);
-        nuevo.setPrecio(precio);
-        productos.add(nuevo);
-        return null;
+        productos.add(new Producto(ids,nombre,description,cantidad,precio));
+        ids ++;
+        
+        return "productosDisponibles?faces-redirect=true";
     }
+    
+    
     
 }

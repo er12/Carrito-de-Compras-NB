@@ -5,9 +5,13 @@
  */
 package src.java.Beans;
 
+import static java.util.Collections.list;
+import java.util.Iterator;
 import java.util.List;
-import src.java.modelo.Usuario;
-import src.java.modelo.Producto;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import modelo.Usuario;
+import modelo.Producto;
 
 /**
  *
@@ -21,6 +25,13 @@ public class CarritoBean {
     private int cantidad;
     private double precio;
     private Usuario usuario;
+    
+    
+    @EJB
+    private ProductosBean almacen;
+
+    public CarritoBean() {
+    }
 
     /**
      * @return the productos
@@ -120,13 +131,31 @@ public class CarritoBean {
         this.usuario = usuario;
     }
     
-    public String agregarProducto(){
-        Producto nuevo = new Producto();
-        nuevo.setCantidad(cantidad);
-        nuevo.setDescription(description);
-        nuevo.setNombre(nombre);
-        nuevo.setPrecio(precio);
-        productos.add(nuevo);
+    public double getTotal()
+    {
+        double sum = 0;
+        for(Producto p : productos)
+            sum += p.getPrecio();
+        return sum;
+    }
+    
+    public String agregarProducto(int id){
+        
+        for (Iterator<Producto> iter = almacen.getProductos().listIterator(); iter.hasNext(); ) 
+        {
+            Producto p = iter.next(); 
+        
+            if(p.getId() == id)
+            {
+                Producto dummy = new Producto(id, p.getNombre(), null, 0, p.getPrecio());
+            
+                almacen.getProductos().remove(p);
+                productos.add(dummy);
+                return "";
+                
+            }
+        }
+        
         return null;
     }
 }

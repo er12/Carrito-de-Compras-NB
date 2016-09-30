@@ -44,6 +44,7 @@
                 </p:submenu>
             </p:menu>
         </h:form>
+        #{productoBean.productos.size()}
         <h:form>
     
         <p:dataTable var="producto" value="#{productoBean.productos}" rows="5" paginator="true">
