@@ -13,7 +13,7 @@
     </script>
     
     <h:head>
-        <title>Agregar Productos</title>
+        <title>Crear Usuario</title>
     </h:head>
     
     <h:body style="background-color: #ffdd99 ">
@@ -34,22 +34,20 @@
             <p:growl id="msg" />
 
             <h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="1">
-                <h1>Datos</h1>
+                <!--<p:messages id="messages" showDetail="true" autoUpdate="true" />-->
+                <h1>Crear</h1>
                 <br/>
-                <h:outputText value="Nombre: " /><p:inputText id="name" value="#{productoBean.nombre}" required="true" label="Nombre del producto" />
-                <h:outputText value="Descripción: "/> <p:inputTextarea rows="5" cols="30" counter="display" 
-                                                                       value="#{productoBean.description}" maxlength="30" counterTemplate="{0} caracteres restantes." autoResize="false" />
-                <h:outputText id="display" />
-                <h:outputLabel for="precio" value="Precio: " />
-                <p:inputNumber id="precio" value="#{productoBean.precio}" symbol="RD $" symbolPosition="p" 
-                               decimalSeparator="." thousandSeparator=",">  
-                </p:inputNumber>
+                <h:outputText value="Nombre de usuario: " /><p:inputText id="name" value="#{usuariosBean.nombreUsuario}" required="true" label="" />
                 
-                <h:outputLabel for="minMax" value="Cantidad: " />
-                <p:spinner id="minMax" value="#{productoBean.cantidad}" min="0" max="100" /><br/>
+                <h:outputLabel for="pwd1" value="Contraseña : *" />
+                <p:password id="pwd1" value="#{usuariosBean.contrasena}" match="pwd2" label="Password 1" required="true" />
+
+                <h:outputLabel for="pwd2" value="Reescriba contraseña : *" />
+                <p:password id="pwd2" value="#{usuariosBean.contrasena}" label="Password 2" required="true" />
+
+                <p:selectBooleanCheckbox value="#{usuariosBean.newisAdmin}" />
                 
-                
-                <p:commandButton value="Crear" id="nonAjax" action="#{productoBean.agregarProducto()}" ajax="false" />
+                <p:commandButton value="Crear" id="nonAjax" action="#{usuariosBean.crearUsuario()}" ajax="false" />
 
                 
                 <!--<h:outputText value="Basic: " />

@@ -2,7 +2,7 @@ package src.java.Beans;
 
 import modelo.Usuario;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,11 +20,13 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class UsuariosBean implements Serializable {
     private String retorno = null;
+    private int cantUsuarios=0;
     private List<Usuario> usuariosRegistrados;
     private int id;
     private String nombreUsuario;
     private String contrasena;
     private boolean isAdmin;
+    private boolean NewisAdmin;
     private boolean logeado;
     
     @PostConstruct
@@ -36,6 +38,7 @@ public class UsuariosBean implements Serializable {
          admin.setContrasena("admin");
          admin.setNombreUsuario("admin");
          usuariosRegistrados.add(admin);
+         cantUsuarios++;
     }
 
     public List<Usuario> getUsuariosRegistrados() {
@@ -97,6 +100,24 @@ public class UsuariosBean implements Serializable {
         this.retorno = retorno;
     }
 
+    public int getCantUsuarios() {
+        return cantUsuarios;
+    }
+
+    public void setCantUsuarios(int cantUsuarios) {
+        this.cantUsuarios = cantUsuarios;
+    }
+
+    public boolean isNewisAdmin() {
+        return NewisAdmin;
+    }
+
+    public void setNewisAdmin(boolean NewisAdmin) {
+        this.NewisAdmin = NewisAdmin;
+    }
+    
+    
+
     public String agregarUsuario(){
         Usuario nuevo = new Usuario();
         nuevo.setId(usuariosRegistrados.size() + 1);
@@ -108,6 +129,9 @@ public class UsuariosBean implements Serializable {
     }
 
     public String borrarUsuario(){
+        logeado = false;
+        
+        //TODO: queseto?
         for(Usuario i : usuariosRegistrados){
             if(i.getId() == id){
                 usuariosRegistrados.remove(i);
@@ -126,6 +150,7 @@ public class UsuariosBean implements Serializable {
             if(nombreUsuario.equals(i.getNombreUsuario()) && contrasena.equals(i.getContrasena())){
                 logeado = true;
                 loggedIn = true;
+                isAdmin = true;
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido ", nombreUsuario);
                 context.addCallbackParam("loggedIn", loggedIn);
                 return "productosDisponibles?faces-redirect=true";
@@ -139,5 +164,12 @@ public class UsuariosBean implements Serializable {
         context.addCallbackParam("loggedIn", loggedIn);
         return null;
        
+    }
+    
+    
+    public void crearUsuario()
+    {
+        usuariosRegistrados.add(new Usuario(cantUsuarios, nombreUsuario, contrasena, NewisAdmin));
+        cantUsuarios++;
     }
 }

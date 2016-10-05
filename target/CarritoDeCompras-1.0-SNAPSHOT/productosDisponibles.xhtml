@@ -4,9 +4,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+    
+    <script>
+        var b = #{usuariosBean.logeado};
+        if(!b)
+            window.location = "http://localhost:17628/CarritoDeCompras";
+    </script>
     <h:head>
         <title>Productos</title>
     </h:head>
+    
     <h:body style="background-color: #ffdd99 ">
             <h:form>  
             <p:growl id="messages"/>
@@ -38,9 +45,8 @@
                     </p:submenu>
                
                 <p:submenu label="Perfil">
-                    <p:menuitem value="Achmed" url="https://www.youtube.com/watch?v=IL357BrwK7c" icon="ui-icon-home"/>
-                    <p:menuitem value="Crear/modificar" outcome="login" icon="fa-sign-out"/>
-                    <p:menuitem value="Salir" outcome="login" icon="fa-sign-out"/>
+                    <p:menuitem value="Crear" outcome="crearUsuario" icon="fa-user-plus"/>
+                    <p:menuitem value="Modificar" outcome="modUsuario" icon="fa-user-md"/>
                 </p:submenu>
             </p:menu>
         </h:form>
@@ -67,17 +73,17 @@
 
               <p:column headerText="Precio">
                   <h:outputText value="#{producto.precio}" />
-              </p:column>
+              </p:column><!--
             <p:column style="width:32px;text-align: center">
                   <p:commandButton update=":form:carDetail" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
-                     <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
+                     <f:setPropertyActionListener value="#{producto}" target="#{dtSelectionView.selectedCar}" />
                  </p:commandButton>
              </p:column>
             <p:column style="width:32px;text-align: center">
                   <p:commandButton update=":form:carDetail" icon="fa-cart-plus" title="View">
                      <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
                  </p:commandButton>
-             </p:column>
+             </p:column>-->
           </p:dataTable>
 
 

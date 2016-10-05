@@ -2,7 +2,12 @@ package helper;
 
 
 import java.util.ArrayList;
+import javax.ejb.Stateless;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
 import modelo.Producto;
+import java.io.Serializable;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,42 +20,61 @@ import modelo.Producto;
  * @author Ernesto
  */
 
-
-
-public class Tienda {
+public class Tienda implements Serializable {
     
-    ArrayList<Producto> Carrito;
-    ArrayList<Producto> Tienda;
-    ArrayList<Producto> Comprados;
+    private static Tienda instancia = null;
+    private static int ids = 0;
+    private static List<Producto> Carrito;
+    private static List<Producto> productosDisponibles;
+    private static List<Producto> Comprados;
 
-    public Tienda() {
-        this.Carrito = new ArrayList<Producto>();
-        this.Tienda = new ArrayList<Producto>();
-        this.Comprados = new ArrayList<Producto>();
+    
+            
+    
+    private Tienda() {
+        
+    }
+    
+    public static Tienda obtenerInstancia(){
+        if(instancia == null){
+            instancia = new Tienda();
+              Carrito = new ArrayList<>();
+              productosDisponibles = new ArrayList<>();
+              Comprados = new ArrayList<>();
+        }
+      
+        return instancia;
+    }
+    
+    public void insertarProducto(String nombre,String description,int cantidad,double precio)
+    {
+        productosDisponibles.add(new Producto(ids,nombre,description,cantidad,precio));
+        ids++;
+        
         
     }
 
-    public ArrayList<Producto> getCarrito() {
+    public List<Producto> getCarrito() {
         return Carrito;
     }
 
-    public void setCarrito(ArrayList<Producto> Carrito) {
+    public void setCarrito(List<Producto> Carrito) {
         this.Carrito = Carrito;
     }
 
-    public ArrayList<Producto> getTienda() {
-        return Tienda;
+    public List<Producto> getProductosDisponibles() {
+        return productosDisponibles;
     }
 
-    public void setTienda(ArrayList<Producto> Tienda) {
-        this.Tienda = Tienda;
+    public void setProductosDisponibles(List<Producto> productosDisponibles) {
+        this.productosDisponibles = productosDisponibles;
     }
 
-    public ArrayList<Producto> getComprados() {
+    public List<Producto> getComprados() {
         return Comprados;
     }
 
-    public void setComprados(ArrayList<Producto> Comprados) {
+    public void setComprados(List<Producto> Comprados) {
         this.Comprados = Comprados;
     }
     

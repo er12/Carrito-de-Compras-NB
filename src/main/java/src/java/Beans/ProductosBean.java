@@ -17,7 +17,7 @@ import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
+//import javax.ejb.EJB;
 
 @ManagedBean(name = "productoBean")
 @SessionScoped
@@ -29,19 +29,15 @@ public class ProductosBean implements Serializable{
     private String description;
     private int cantidad;
     private double precio;
-    
-    
-    @EJB
-    private Tienda tienda;
 
     public ProductosBean(){
-        
-        productos = new ArrayList<Producto>();
+         
+        //Tienda.obtenerInstancia().getTienda().add(new Producto(99,"Arroz","Pimco",2,100));
         
     }
 
     public List<Producto> getProductos() {
-        return productos;
+        return Tienda.obtenerInstancia().getProductosDisponibles();
     }
 
     public void setProductos(List<Producto> productos) {
@@ -89,10 +85,13 @@ public class ProductosBean implements Serializable{
     }
 
     public String agregarProducto(){
-        productos.add(new Producto(ids,nombre,description,cantidad,precio));
-        ids ++;
-        
+        Tienda.obtenerInstancia().insertarProducto(nombre,description,cantidad,precio);
+        //productos.add(new Producto(ids,nombre,description,cantidad,precio));
+        productos = Tienda.obtenerInstancia().getProductosDisponibles();
+        //productos.add(new Producto(ids,nombre,description,cantidad,precio));
+        //Tienda.obtenerInstancia().setTienda(productos);
         return "productosDisponibles?faces-redirect=true";
+                
     }
     
     
