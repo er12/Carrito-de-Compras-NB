@@ -1,6 +1,6 @@
 package src.java.Beans;
 
-import modelo.Usuario;
+import src.java.modelo.Usuario;
 
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
