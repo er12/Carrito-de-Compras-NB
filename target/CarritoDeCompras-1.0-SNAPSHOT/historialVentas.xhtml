@@ -10,12 +10,10 @@
     <h:body style="background-color: #ffdd99 ">
         <h:form>  
             <p:growl id="messages"/>
-
             <p:menubar>
-                <p:menuitem >Carrito de compras</p:menuitem>
-                
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
                 <f:facet name="options">
-                    <p:commandButton type="button" value="Cerrar sesión" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -49,9 +47,9 @@
                      </p:commandButton>
                  </p:column>
               </p:dataTable>
-    -->     
+      
 
-        </h:form>
+        </h:form>-->
        
     </h:body>
 </html>

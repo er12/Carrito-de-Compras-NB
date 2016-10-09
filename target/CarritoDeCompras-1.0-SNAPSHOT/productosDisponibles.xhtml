@@ -6,28 +6,30 @@
       xmlns:p="http://primefaces.org/ui">
     
     <script>
-        var b = #{usuariosBean.logeado};
-        if(!b)
+        var log = #{usuariosBean.logeado};
+        var admin = #{usuariosBean.isAdmin};
+        if(!log)
+        {
             window.location = "http://localhost:17628/CarritoDeCompras";
+        }
     </script>
     <h:head>
         <title>Productos</title>
+        
     </h:head>
-    
+ 
     <h:body style="background-color: #ffdd99 ">
-            <h:form>  
+        
+        <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                <p:menuitem >Carrito de compras</p:menuitem>
-                <f:facet name="dash" >  <!--rendered="#usuariosBean.isAdmin}"-->
-                    <p:commandButton type="button" value="dashBoard" icon="fa-dashboard" />
-                </f:facet>
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
                 <f:facet name="options">
-                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{usuariosBean.borrarUsuario()}" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
-        
+
         <h:form>
             <p:menu>
                 <p:submenu label="Mi carrito">
@@ -36,21 +38,21 @@
                 </p:submenu>
                 
                     <p:submenu label="Compras">                    
-                        <p:menuitem value="Historial de compras"  ajax="false" outcome="historialCompras" icon="fa-history"/>
+                        <p:menuitem value="Historial de ventas"  ajax="false" outcome="historialVentas" icon="fa-history"/>
                     </p:submenu>
 
-                    <p:submenu label="Productos">                    
+                    <p:submenu label="Productos" rendered="#{usuariosBean.isAdmin}">                    
                         <p:menuitem value="Crear"  ajax="false" icon="fa-edit" outcome="agregarProductos"/>
                         <p:menuitem value="Modificar"  ajax="false" icon="fa-edit" outcome="modificarProductos"/>
                     </p:submenu>
                
-                <p:submenu label="Perfil">
+                <p:submenu label="Perfil" rendered="#{usuariosBean.isAdmin}">
                     <p:menuitem value="Crear" outcome="crearUsuario" icon="fa-user-plus"/>
                     <p:menuitem value="Modificar" outcome="modUsuario" icon="fa-user-md"/>
                 </p:submenu>
             </p:menu>
         </h:form>
-        #{productoBean.productos.size()}
+        
         <h:form>
     
         <p:dataTable var="producto" value="#{productoBean.productos}" rows="5" paginator="true">
@@ -79,11 +81,7 @@
                      <f:setPropertyActionListener value="#{producto}" target="#{dtSelectionView.selectedCar}" />
                  </p:commandButton>
              </p:column>
-            <p:column style="width:32px;text-align: center">
-                  <p:commandButton update=":form:carDetail" icon="fa-cart-plus" title="View">
-                     <f:setPropertyActionListener value="#{car}" target="#{dtSelectionView.selectedCar}" />
-                 </p:commandButton>
-             </p:column>-->
+     -->
           </p:dataTable>
 
 

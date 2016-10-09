@@ -94,6 +94,20 @@ public class ProductosBean implements Serializable{
                 
     }
     
-    
+    public String addToCart(int pId){
+        
+        for(Producto p : Tienda.obtenerInstancia().getProductosDisponibles())
+        {
+            if(p.getId() == pId)
+            {
+                Tienda.obtenerInstancia().getCarrito().add(p);
+                Tienda.obtenerInstancia().getProductosDisponibles().remove(p);
+                return null;
+            }
+        }
+        
+        return null;
+                
+    }
     
 }

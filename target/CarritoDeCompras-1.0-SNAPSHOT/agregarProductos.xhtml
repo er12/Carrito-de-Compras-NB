@@ -6,10 +6,11 @@
       xmlns:p="http://primefaces.org/ui">
     
     <script>
-        var a = #{usuariosBean.isAdmin};
-        var b = #{usuariosBean.logeado};
-        if(!b|| !a)
+        var admin = #{usuariosBean.isAdmin};
+        var log = #{usuariosBean.logeado};
+        if(!log|| !admin)
             window.location = "http://localhost:17628/CarritoDeCompras";
+        
     </script>
     
     <h:head>
@@ -17,13 +18,12 @@
     </h:head>
     
     <h:body style="background-color: #ffdd99 ">
+        
+        <!-- Toolbar de arriba-->
         <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                <p:menuitem >Carrito de compras</p:menuitem>
-                <f:facet name="dash" > 
-                    <p:commandButton type="button" value="dashBoard" icon="fa-dashboard" />
-                </f:facet>
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
                 <f:facet name="options">
                     <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
