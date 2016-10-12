@@ -10,6 +10,10 @@ package src.java.Beans;
  */
 
 import helper.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import src.java.modelo.Producto;
 
 import javax.enterprise.context.SessionScoped;
@@ -20,9 +24,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.apache.commons.io.FileUtils;
 import org.primefaces.event.FileUploadEvent;
 import src.java.modelo.Rating;
 import org.primefaces.event.RateEvent;
+import org.primefaces.model.ByteArrayContent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 //import javax.ejb.EJB;
 
@@ -37,8 +45,9 @@ public class ProductosBean implements Serializable{
     private int cantidad;
     private double precio;
     private int rating;
-    private ArrayList<UploadedFile> files;
+    private ArrayList<UploadedFile> files = new ArrayList<>();;
     private Producto producto;
+    private List<StreamedContent> listImage = null;
     
     @PostConstruct
     public void init()
@@ -49,8 +58,7 @@ public class ProductosBean implements Serializable{
     }
     
     public ProductosBean(){
-         
-        files = new ArrayList<>();
+        
         
     }
 
@@ -139,7 +147,7 @@ public class ProductosBean implements Serializable{
     public String agregarProducto(){
         //Crear
         Tienda.obtenerInstancia().insertarProducto(nombre,description,cantidad,precio,files);
-        
+        files = new ArrayList<>();
         productos = Tienda.obtenerInstancia().getProductosDisponibles();
         
         return "productosDisponibles?faces-redirect=true";
@@ -157,9 +165,7 @@ public class ProductosBean implements Serializable{
                 return null;
             }
         }
-        
         return null;
-                
     }
     /*
     public int totalRatings(Producto producto)
@@ -240,15 +246,48 @@ public class ProductosBean implements Serializable{
         
         files.add(event.getFile());
         
+        /*UploadedFile uploadedFile = (UploadedFile)event.getFile();
+        
+         //create an InputStream from the uploaded file
+        InputStream inputStr = null;
+        try {
+            inputStr = uploadedFile.getInputstream();
+        } catch (IOException e) {
+            System.out.println("Error0");
+        }
+
+        //create destination File
+        String destPath = "C:\\temp\\";
+        File destFile = new File(destPath);
+
+        //use org.apache.commons.io.FileUtils to copy the File
+        try {                    
+            FileUtils.copyInputStreamToFile(inputStr, destFile);
+        } catch (IOException e) {
+            System.out.println("Error");
+        }*/
         FacesMessage message = new FacesMessage("Archivo", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
     public List<String> getImagenes(Producto p)
     {
-        return null;
+        List<String> images = new ArrayList<>();
+        
+        images.add("arroz.jpg"); 
+                
+        
+        
+        listImage = new ArrayList<>();
+        for(UploadedFile uf : p.getUpFiles()){
+            listImage.add(new DefaultStreamedContent(new ByteArrayInputStream(uf.getContents()), "image/jpg"));
+            //listImage.add(uf.getFileName());   
+        }
+        
+        return images;
         
     }
+    
             
     
 }
