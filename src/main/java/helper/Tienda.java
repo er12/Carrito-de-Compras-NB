@@ -3,7 +3,6 @@ package helper;
 import java.util.ArrayList;
 import src.java.modelo.Producto;
 import java.io.Serializable;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import src.java.modelo.Comentario;
 
@@ -41,22 +40,7 @@ public class Tienda implements Serializable {
         return instancia;
     }
     
-    public void insertarProducto(String nombre,String description,int cantidad,double precio,UploadedFile uf){
-        Producto p = new Producto(ids,nombre,description,cantidad,precio, uf);
-        p.setUpFile(uf);
-        
-        productosDisponibles.add(p);
-        ids++;
-    }
     
-    public void agregarComentario(int prodID, Comentario c){
-        for(Producto p : productosDisponibles ){
-            if( prodID == p.getId()){
-                p.getComentarios().add(c);
-                return;
-            }
-        }
-    }
 
     public ArrayList<Producto> getCarrito() {
         return Carrito;
@@ -90,6 +74,103 @@ public class Tienda implements Serializable {
         Tienda.instancia = instancia;
     }
     
+    public boolean agregarProductoACarrito(Producto PAComprar)
+    {
+        
+        for(Producto pd : productosDisponibles)
+        {
+            if(PAComprar.getId() == pd.getId())
+            {
+                if(pd.getCantidad()<1)
+                    return false;
+
+                Producto compare = null;
+                for(Producto pc : Carrito)
+                {
+                    if(PAComprar.getId() == pc.getId())
+                    {
+                        compare = pc;
+                        break;
+                    }
+                    
+                }
+                if(compare == null)
+                {
+                    Carrito.add(new Producto(pd.getId(), pd.getNombre(),  null, 1, pd.getPrecio(), null));
+                    return true;
+                }
+                else
+                {
+                    if(compare.getCantidad() < pd.getCantidad())
+                    {
+                        compare.setCantidad(compare.getCantidad());
+                    }
+                    else return false;
+                }
+                        
+            }
+        }
+        
+        
+       /* 
+        for(Producto p : productosDisponibles)
+        {
+            if(PAComprar.getId() == p.getId())
+            {
+                if( p.getCantidad()>1)
+                {
+                    return false;
+                }
+                p.setCantidad(p.getCantidad()-1);
+                Carrito.add(PAComprar);
+                return true;
+                
+            }
+            
+        }*/
+        
+        return false;
+        
+        
+    }
+    
+    
+    public void insertarProducto(String nombre,String description,int cantidad,double precio,UploadedFile uf){
+        Producto p = new Producto(ids,nombre,description,cantidad,precio, uf);
+        p.setUpFile(uf);
+        
+        productosDisponibles.add(p);
+        ids++;
+    }
+    
+    public void agregarComentario(int prodID, Comentario c){
+        for(Producto p : productosDisponibles ){
+            if( prodID == p.getId()){
+                p.getComentarios().add(c);
+                return;
+            }
+        }
+    }
+    
+    public void comprar()
+    {
+        for(Producto pc : Carrito)
+        {
+            for(Producto pd : productosDisponibles)
+            {
+                if(pc .getId() == pd.getCantidad())
+                {
+                    pd.setCantidad( pd.getCantidad() - pc.getCantidad());
+                    Comprados.add(pd);
+                    if (pd.getCantidad() <= 0 )
+                    {
+                        productosDisponibles.remove(pd);
+                    }
+                }
+                
+            }
+        }
+    }
     
     
 }
