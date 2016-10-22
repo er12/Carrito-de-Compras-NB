@@ -5,6 +5,7 @@ import src.java.modelo.Producto;
 import java.io.Serializable;
 import org.primefaces.model.UploadedFile;
 import src.java.modelo.Comentario;
+import src.java.modelo.ProductoComprado;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +24,7 @@ public class Tienda implements Serializable {
     private static int ids = 0;
     private static ArrayList<Producto> Carrito;
     private static ArrayList<Producto> productosDisponibles;
-    private static ArrayList<Producto> Comprados;  
+    private static ArrayList<ProductoComprado> Comprados;  
     
     private Tienda() {
         
@@ -58,11 +59,11 @@ public class Tienda implements Serializable {
         this.productosDisponibles = productosDisponibles;
     }
 
-    public ArrayList<Producto> getComprados() {
+    public ArrayList<ProductoComprado> getComprados() {
         return Comprados;
     }
 
-    public void setComprados(ArrayList<Producto> Comprados) {
+    public void setComprados(ArrayList<ProductoComprado> Comprados) {
         this.Comprados = Comprados;
     }
 
@@ -76,7 +77,6 @@ public class Tienda implements Serializable {
     
     public boolean agregarProductoACarrito(Producto PAComprar)
     {
-        
         for(Producto pd : productosDisponibles)
         {
             if(PAComprar.getId() == pd.getId())
@@ -101,9 +101,10 @@ public class Tienda implements Serializable {
                 }
                 else
                 {
-                    if(compare.getCantidad() < pd.getCantidad())
+                   if(compare.getCantidad() < pd.getCantidad())
                     {
-                        compare.setCantidad(compare.getCantidad());
+                        compare.setCantidad(compare.getCantidad()+1);
+                        return true;
                     }
                     else return false;
                 }
@@ -111,23 +112,6 @@ public class Tienda implements Serializable {
             }
         }
         
-        
-       /* 
-        for(Producto p : productosDisponibles)
-        {
-            if(PAComprar.getId() == p.getId())
-            {
-                if( p.getCantidad()>1)
-                {
-                    return false;
-                }
-                p.setCantidad(p.getCantidad()-1);
-                Carrito.add(PAComprar);
-                return true;
-                
-            }
-            
-        }*/
         
         return false;
         
@@ -152,7 +136,7 @@ public class Tienda implements Serializable {
         }
     }
     
-    public void comprar()
+    public void comprar(int UId)
     {
         for(Producto pc : Carrito)
         {
@@ -161,7 +145,7 @@ public class Tienda implements Serializable {
                 if(pc .getId() == pd.getCantidad())
                 {
                     pd.setCantidad( pd.getCantidad() - pc.getCantidad());
-                    Comprados.add(pd);
+                    Comprados.add(new ProductoComprado(pd.getId(), pd.getNombre(),pd.getDescription(),pd.getCantidad(),pd.getPrecio()));
                     if (pd.getCantidad() <= 0 )
                     {
                         productosDisponibles.remove(pd);
