@@ -80,7 +80,9 @@
                                         <h:panelGrid columns="2" cellpadding="1">
                                             <h:outputText value="Por:" />
                                             <h:outputText value="#{usuariosBean.getNombre(coment.ID_Autor)}" style="font-weight: bold"/>
+                                            
                                             <h:outputText value="#{coment.texto}" style="font-weight: bold"/>
+                                            
                                             <p:commandButton action="#{comentarioBean.eliminar( productoBean.producto, coment.ID_Comentario)}" 
                                                              rendered="#{usuariosBean.usuarioLogeado.admin}" 
                                                              style="width:10px;height:10px" update=":form:seccionComent"
