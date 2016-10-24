@@ -5,88 +5,128 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     
-    <script>
-        var log = #{usuariosBean.logeado};
-        var admin = #{usuariosBean.isAdmin};
-        if(!log)
-        {
-            window.location = "http://localhost:17628/CarritoDeCompras";
-        }
-    </script>
     <h:head>
         <title>Productos</title>
         
     </h:head>
  
-    <h:body style="background-color: #ffdd99 ">
-        
+    <h:body style="background-color: #ffdd99">
         <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
-                <f:facet name="options">
-                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-home" > Carrito de compras</p:menuitem>
+                    <p:menuitem action="#{usuariosBean.goDashBoard()}" icon="fa fa-dashboard" rendered="#{usuariosBean.isAdmin}" > DashBoard</p:menuitem>
+                    
+                <f:facet name="options" rendered="#{usuariosBean.logeado}">
+                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{usuariosBean.cerrarSesion()}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
+        
+        <h:form  id="form" >
+              <p:growl id="msgs" showDetail="true" />
+              <p:dataTable id="listaProductos" var="producto" value="#{productoBean.productos}" rows="5" paginator="true" >
 
+                <p:column headerText="Id">
+                    <h:outputText value="#{producto.id}" />
+                </p:column>
+
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{producto.nombre}" />
+                </p:column>
+
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{producto.description}" />
+                </p:column>
+
+                <p:column headerText="Cantidad">
+                    <h:outputText value="#{producto.cantidad}" />
+                </p:column>
+
+                <p:column headerText="Precio">
+                    <h:outputText value="#{producto.precio}" />
+                </p:column>
+                
+                <p:column headerText="Carrito">
+                    <p:commandLink id="ajax" update=":form:msgs listaProductos" action="#{carritoBean.agregarProducto( usuariosBean.usuarioLogeado , producto.id )}">
+                        <h:outputText value="Add to cart" />
+                    </p:commandLink>
+                </p:column>
+                    
+                <p:column style="width:32px;text-align: center">
+                    <p:commandButton update=":form:productDetail" oncomplete="PF('productDialog').show()" icon="ui-icon-search" title="View">
+                       <f:setPropertyActionListener value="#{producto}" target="#{productoBean.producto}" />
+                   </p:commandButton>
+               </p:column>
+                
+            </p:dataTable>
+            <!--Informacion ^^^^^^^^^^^^^^^^^^^^- -->
+              <p:dialog header="Información" widgetVar="productDialog" modal="true" position="center top" showEffect="fade" hideEffect="fade" resizable="false">
+               <p:outputPanel id="productDetail" style="text-align:center;">
+
+                   <p:panelGrid id="seccionComent" columns="1" rendered="#{not empty productoBean.producto}" columnClasses="label,value">
+                       <f:facet name="header">
+                           <p:graphicImage value="#{productoBean.producto.imagen}" alt="No Imag." width="300" height="180" />
+                       </f:facet>
+                       
+                       <p:dataScroller value="#{productoBean.getComentarios(productoBean.producto.id)}" var="coment" id ="comments" widgetVar="comments" chunkSize="10" mode="inline" scrollHeight="200">
+                            <f:facet name="header">
+                                Comentarios
+                            </f:facet>
+                                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                    <p:rating value="#{coment.rating}" disabled="true">
+                                    </p:rating>
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="2" cellpadding="1">
+                                            <h:outputText value="Por:" />
+                                            <h:outputText value="#{usuariosBean.getNombre(coment.ID_Autor)}" style="font-weight: bold"/>
+                                            <h:outputText value="#{coment.texto}" style="font-weight: bold"/>
+                                            <p:commandButton action="#{comentarioBean.eliminar( productoBean.producto, coment.ID_Comentario)}" 
+                                                             rendered="#{usuariosBean.usuarioLogeado.admin}" 
+                                                             style="width:10px;height:10px" update=":form:seccionComent"
+                                                             icon="fa fa-close"/>
+                                        </h:panelGrid>
+                                    </p:outputPanel>
+                                </h:panelGrid>
+                       </p:dataScroller>
+                       <p:spacer rendered="#{ (not comentarioBean.userHasComment(productoBean.producto, usuariosBean.id) ) and usuariosBean.logeado }">
+                           <p:inputTextarea rows="2" cols="20" value="#{comentarioBean.texto}" autoResize="false" queryDelay="750" minQueryLength="4" />
+                           <p:rating value="#{comentarioBean.rating}">
+                           </p:rating>
+                           <p:commandButton value="Comentar" id="comentar" ajax="true" 
+                                            actionListener="#{comentarioBean.makeComment(productoBean.producto.id, usuariosBean.id )}" 
+                                            update="comments :form:seccionComent" styleClass="ui-priority-primary" icon="fa fa-comment" />
+                        </p:spacer> 
+                   </p:panelGrid>
+               </p:outputPanel>
+           </p:dialog>
+
+
+        </h:form>
+        
+        <!-- Side menu-->
         <h:form>
-            <p:menu>
+            <p:menu  rendered="#{ usuariosBean.logeado }" >
                 <p:submenu label="Mi carrito">
-                    <p:menuitem value="Ver mi carrito" id="verCarrito" outcome="mostrarCarroCompra"  icon="fa-cart-plus" />
-
+                    <p:menuitem value="Ver mi carrito" id="verCarrito" outcome="mostrarCarroCompra"  icon="fa fa-cart-plus" />
                 </p:submenu>
                 
-                    <p:submenu label="Compras">                    
-                        <p:menuitem value="Historial de ventas"  ajax="false" outcome="historialVentas" icon="fa-history"/>
-                    </p:submenu>
+                <p:submenu label="Compras">                    
+                    <p:menuitem value="Historial de ventas"  ajax="false" outcome="historialVentas" icon="fa fa-history"/>
+                </p:submenu>
 
-                    <p:submenu label="Productos" rendered="#{usuariosBean.isAdmin}">                    
-                        <p:menuitem value="Crear"  ajax="false" icon="fa-edit" outcome="agregarProductos"/>
-                        <p:menuitem value="Modificar"  ajax="false" icon="fa-edit" outcome="modificarProductos"/>
-                    </p:submenu>
+                <p:submenu label="Productos" rendered="#{usuariosBean.isAdmin}">                    
+                    <p:menuitem value="Crear"  ajax="false" icon="fa fa-edit" outcome="agregarProductos"/>
+                    <p:menuitem value="Modificar"  ajax="false" icon="fa fa-edit" outcome="modificarProductos"/>
+                </p:submenu>
                
                 <p:submenu label="Perfil" rendered="#{usuariosBean.isAdmin}">
-                    <p:menuitem value="Crear" outcome="crearUsuario" icon="fa-user-plus"/>
-                    <p:menuitem value="Modificar" outcome="modUsuario" icon="fa-user-md"/>
+                    <p:menuitem value="Crear" outcome="crearUsuario" icon="fa fa-user-plus"/>
+                    <p:menuitem value="Modificar" outcome="modUsuario" icon="fa fa-user-md"/>
                 </p:submenu>
             </p:menu>
         </h:form>
-        
-        <h:form>
-    
-        <p:dataTable var="producto" value="#{productoBean.productos}" rows="5" paginator="true">
 
-            <p:column headerText="Id">
-                  <h:outputText value="#{producto.id}" />
-              </p:column>
-
-              <p:column headerText="Nombre">
-                  <h:outputText value="#{producto.nombre}" />
-              </p:column>
-
-              <p:column headerText="Descripción">
-                  <h:outputText value="#{producto.description}" />
-              </p:column>
-
-              <p:column headerText="Cantidad">
-                  <h:outputText value="#{producto.cantidad}" />
-              </p:column>
-
-              <p:column headerText="Precio">
-                  <h:outputText value="#{producto.precio}" />
-              </p:column><!--
-            <p:column style="width:32px;text-align: center">
-                  <p:commandButton update=":form:carDetail" oncomplete="PF('carOP').show('#{component.clientId}')" icon="ui-icon-search" title="View">
-                     <f:setPropertyActionListener value="#{producto}" target="#{dtSelectionView.selectedCar}" />
-                 </p:commandButton>
-             </p:column>
-     -->
-          </p:dataTable>
-
-
-        </h:form>
-       
     </h:body>
 </html>
 
