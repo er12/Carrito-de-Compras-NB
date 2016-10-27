@@ -23,7 +23,7 @@
         <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >#{msg.mensaje_header}</p:menuitem>
                 <f:facet name="options">
                     <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
@@ -36,20 +36,20 @@
             <h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="1">
                 <h1>Datos</h1>
                 <br/>
-                <h:outputText value="Nombre: " /><p:inputText id="name" value="#{productoBean.nombre}" required="true" label="Nombre del producto" />
-                <h:outputText value="Descripción: "/> <p:inputTextarea rows="5" cols="30" counter="display" 
+                <h:outputText value="#{msg.mensaje_nombre}: " /><p:inputText id="name" value="#{productoBean.nombre}" required="true" label="Nombre del producto" />
+                <h:outputText value="#{msg.mensaje_descripcion}: "/> <p:inputTextarea rows="5" cols="30" counter="display" 
                                                                        value="#{productoBean.description}" maxlength="30" counterTemplate="{0} caracteres restantes." autoResize="false" />
                 <h:outputText id="display" />
-                <h:outputLabel for="precio" value="Precio: " />
+                <h:outputLabel for="precio" value="#{msg.mensaje_precio}: " />
                 <p:inputNumber id="precio" value="#{productoBean.precio}" symbol="RD $" symbolPosition="p" 
                                decimalSeparator="." thousandSeparator=",">  
                 </p:inputNumber>
                 
-                <h:outputLabel for="minMax" value="Cantidad: " />
+                <h:outputLabel for="minMax" value="#{msg.mensaje_cantidad}: " />
                 <p:spinner id="minMax" value="#{productoBean.cantidad}" min="0" max="100" /><br/>
                 
                 
-                <p:commandButton value="Crear" id="nonAjax" action="#{productoBean.agregarProducto()}" ajax="false" />
+                <p:commandButton value="#{msg.mensaje_crear}" id="nonAjax" action="#{productoBean.agregarProducto()}" ajax="false" />
 
                 
                 <!--<h:outputText value="Basic: " />

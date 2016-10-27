@@ -12,9 +12,9 @@
         <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >#{msg.mensaje_header}</p:menuitem>
                 <f:facet name="options">
-                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="#{msg.mensaje_sesion_cer}" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -26,19 +26,19 @@
                       <h:outputText value="#{producto.id}" />
                   </p:column>
 
-                  <p:column headerText="Nombre">
+                  <p:column headerText="#{msg.mensaje_nombre}">
                       <h:outputText value="#{producto.nombre}" />
                   </p:column>
 
-                  <p:column headerText="Descripción">
+                  <p:column headerText="#{msg.mensaje_descripcion}">
                       <h:outputText value="#{producto.description}" />
                   </p:column>
 
-                  <p:column headerText="Cantidad">
+                  <p:column headerText="#{msg.mensaje_cantidad}">
                       <h:outputText value="#{producto.cantidad}" />
                   </p:column>
 
-                  <p:column headerText="Precio">
+                  <p:column headerText="#{msg.mensaje_precio}">
                       <h:outputText value="#{producto.precio}" />
                   </p:column>
                 <p:column style="width:32px;text-align: center">

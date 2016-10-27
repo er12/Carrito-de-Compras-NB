@@ -20,9 +20,9 @@
         <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >#{msg.mensaje_header}</p:menuitem>
                 <f:facet name="options">
-                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="#{msg.mensaje_sesion_cer}" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -32,14 +32,14 @@
 
             <h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="1">
                 <!--<p:messages id="messages" showDetail="true" autoUpdate="true" />-->
-                <h1>Crear</h1>
+                <h1>#{msg.mensaje_crear}</h1>
                 <br/>
-                <h:outputText value="Nombre de usuario: " /><p:inputText id="name" value="#{usuariosBean.nombreUsuario}" required="true" label="" />
+                <h:outputText value="#{msg.mensaje_nombre} " /><p:inputText id="name" value="#{usuariosBean.nombreUsuario}" required="true" label="" />
                 
-                <h:outputLabel for="pwd1" value="Contraseña : *" />
+                <h:outputLabel for="pwd1" value="#{msg.mensaje_formulario_contrasena} : *" />
                 <p:password id="pwd1" value="#{usuariosBean.contrasena}" match="pwd2" label="Password 1" required="true" />
 
-                <h:outputLabel for="pwd2" value="Reescriba contraseña : *" />
+                <h:outputLabel for="pwd2" value="#{msg.mensaje_formulario_contrasena}  : *" />
                 <p:password id="pwd2" value="#{usuariosBean.contrasena}" label="Password 2" required="true" />
                 
                 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
@@ -47,7 +47,7 @@
                     <p:selectBooleanCheckbox  value="#{usuariosBean.newIsAdmin}" />
                 </h:panelGrid>
                 
-                <p:commandButton value="Crear" id="nonAjax" action="#{usuariosBean.crearUsuario()}"  
+                <p:commandButton value="#{msg.mensaje_crear}" id="nonAjax" action="#{usuariosBean.crearUsuario()}"  
                                  update="msg" ajax="false" />
 
                 

@@ -14,7 +14,7 @@
         }
     </script>
     <h:head>
-        <title>Productos</title>
+        <title>#{msg.mensaje_productos}</title>
         
     </h:head>
  
@@ -23,9 +23,9 @@
         <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >Carrito de compras</p:menuitem>
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-dashboard" >#{msg.mensaje_header}</p:menuitem>
                 <f:facet name="options">
-                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="#{msg.mensaje_sesion_cer}" action="#{loginBean.cerrarSesion}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -37,13 +37,13 @@
                     <h:outputText value="#{user.id}" />
                 </p:column>
 
-                <p:column headerText="Year">
+                <p:column headerText="#{msg.mensaje_anio}">
                     <h:outputText value="#{user.nombreUsuario}" />
                 </p:column>
 
-                <p:column headerText="Opciones">
+                <p:column headerText="#{msg.mensaje_opciones}">
                     <p:commandLink id="ajax" update="userTable growl" action="#{usuariosBean.eliminar(user.id)}">
-                        <h:outputText value="Eliminar" />
+                        <h:outputText value="#{msg.mensaje_eliminar}" />
                     </p:commandLink>
                 </p:column>
 

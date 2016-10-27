@@ -14,11 +14,11 @@
         <h:form>  
             <p:growl id="messages"/>
             <p:menubar>
-                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-home" > Carrito de compras</p:menuitem>
+                    <p:menuitem action="#{usuariosBean.goHome()}" icon="fa fa-home" > #{msg.mensaje_header}</p:menuitem>
                     <p:menuitem action="#{usuariosBean.goDashBoard()}" icon="fa fa-dashboard" rendered="#{usuariosBean.isAdmin}" > DashBoard</p:menuitem>
                     
                 <f:facet name="options" rendered="#{usuariosBean.logeado}">
-                    <p:commandButton ajax="false" value="Cerrar sesión" action="#{usuariosBean.cerrarSesion()}" icon="ui-icon-extlink" />
+                    <p:commandButton ajax="false" value="#{msg.mensaje_sesion_cer}" action="#{usuariosBean.cerrarSesion()}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -31,25 +31,25 @@
                     <h:outputText value="#{producto.id}" />
                 </p:column>
 
-                <p:column headerText="Nombre">
+                <p:column headerText="#{msg.mensaje_nombre}">
                     <h:outputText value="#{producto.nombre}" />
                 </p:column>
 
-                <p:column headerText="Descripción">
+                <p:column headerText="#{msg.mensaje_descripcion}">
                     <h:outputText value="#{producto.description}" />
                 </p:column>
 
-                <p:column headerText="Cantidad">
+                <p:column headerText="#{msg.mensaje_cantidad}">
                     <h:outputText value="#{producto.cantidad}" />
                 </p:column>
 
-                <p:column headerText="Precio">
+                <p:column headerText="#{msg.mensaje_precio}">
                     <h:outputText value="#{producto.precio}" />
                 </p:column>
                 
-                <p:column headerText="Carrito">
+                <p:column headerText="#{msg.mensaje_header}">
                     <p:commandLink id="ajax" update=":form:msgs listaProductos" action="#{carritoBean.agregarProducto( usuariosBean.usuarioLogeado , producto.id )}">
-                        <h:outputText value="Add to cart" />
+                        <h:outputText value="#{msg.mensaje_agregar}" />
                     </p:commandLink>
                 </p:column>
                     
@@ -71,7 +71,7 @@
                        
                        <p:dataScroller value="#{productoBean.getComentarios(productoBean.producto.id)}" var="coment" id ="comments" widgetVar="comments" chunkSize="10" mode="inline" scrollHeight="200">
                             <f:facet name="header">
-                                Comentarios
+                                #{msg.mensaje_comentarios}
                             </f:facet>
                                 <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                     <p:rating value="#{coment.rating}" disabled="true">
@@ -95,7 +95,7 @@
                            <p:inputTextarea rows="2" cols="20" value="#{comentarioBean.texto}" autoResize="false" queryDelay="750" minQueryLength="4" />
                            <p:rating value="#{comentarioBean.rating}">
                            </p:rating>
-                           <p:commandButton value="Comentar" id="comentar" ajax="true" 
+                           <p:commandButton value="#{msg.mensaje_comentar}" id="comentar" ajax="true" 
                                             actionListener="#{comentarioBean.makeComment(productoBean.producto.id, usuariosBean.id )}" 
                                             update="comments :form:seccionComent" styleClass="ui-priority-primary" icon="fa fa-comment" />
                         </p:spacer> 
@@ -109,22 +109,22 @@
         <!-- Side menu-->
         <h:form>
             <p:menu  rendered="#{ usuariosBean.logeado }" >
-                <p:submenu label="Mi carrito">
+                <p:submenu label="#{msg.mensaje_carrito}">
                     <p:menuitem value="Ver mi carrito" id="verCarrito" outcome="mostrarCarroCompra"  icon="fa fa-cart-plus" />
                 </p:submenu>
                 
-                <p:submenu label="Compras">                    
+                <p:submenu label="#{msg.mensaje_compras}">                    
                     <p:menuitem value="Historial de ventas"  ajax="false" outcome="historialVentas" icon="fa fa-history"/>
                 </p:submenu>
 
-                <p:submenu label="Productos" rendered="#{usuariosBean.isAdmin}">                    
-                    <p:menuitem value="Crear"  ajax="false" icon="fa fa-edit" outcome="agregarProductos"/>
-                    <p:menuitem value="Modificar"  ajax="false" icon="fa fa-edit" outcome="modificarProductos"/>
+                <p:submenu label="#{msg.mensaje_productos}" rendered="#{usuariosBean.isAdmin}">                    
+                    <p:menuitem value="#{msg.mensaje_crear}"  ajax="false" icon="fa fa-edit" outcome="agregarProductos"/>
+                    <p:menuitem value="#{msg.mensaje_modificar}"  ajax="false" icon="fa fa-edit" outcome="modificarProductos"/>
                 </p:submenu>
                
-                <p:submenu label="Perfil" rendered="#{usuariosBean.isAdmin}">
-                    <p:menuitem value="Crear" outcome="crearUsuario" icon="fa fa-user-plus"/>
-                    <p:menuitem value="Modificar" outcome="modUsuario" icon="fa fa-user-md"/>
+                <p:submenu label="P#{msg.mensaje_perfil}" rendered="#{usuariosBean.isAdmin}">
+                    <p:menuitem value="#{msg.mensaje_crear}" outcome="crearUsuario" icon="fa fa-user-plus"/>
+                    <p:menuitem value="#{msg.mensaje_modificar}" outcome="modUsuario" icon="fa fa-user-md"/>
                 </p:submenu>
             </p:menu>
         </h:form>

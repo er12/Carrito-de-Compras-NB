@@ -12,7 +12,7 @@
              
         <h:form>
              <p:menubar>
-                <p:menuitem >Carrito de compras</p:menuitem>
+                <p:menuitem >#{msg.mensaje_header}</p:menuitem>
                 <f:facet name="options">
                      <p:commandButton id="loginLink" value="Iniciar sesión" onclick="PF('logindlg').show();" title="login">
                      </p:commandButton>
@@ -27,14 +27,14 @@
             
             <p:dialog header="Login" widgetVar="logindlg" resizable="false">
                 <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="username" value="Username:" />
+                    <h:outputLabel for="username" value="#{msg.mensaje_nombre}:" />
                     <p:inputText id="username" value="#{usuariosBean.nombreUsuario}" required="true" label="Nombre de Usuario" />
 
-                    <h:outputLabel for="password" value="Contraseña:" />
+                    <h:outputLabel for="password" value="#{msg.mensaje_formulario_contrasena}:" />
                     <p:password id="password" value="#{usuariosBean.contrasena}" required="true" label="Contraseña" />
 
                     <f:facet name="footer">
-                        <p:commandButton value="Login" update="growl" action="#{usuariosBean.verificarUsuario}"
+                        <p:commandButton value="#{msg.mensaje_sesion_ini}" update="growl" action="#{usuariosBean.verificarUsuario}"
                                          oncomplete="handleLoginRequest(xhr, status, args)" />
                     </f:facet>  
                 </h:panelGrid>

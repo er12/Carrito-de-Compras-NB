@@ -12,12 +12,12 @@
             <p:growl id="messages"/>
 
             <p:menubar>
-                <p:menuitem >Carrito de compras</p:menuitem>
+                <p:menuitem >#{msg.mensaje_header}</p:menuitem>
                 <f:facet name="dash" >  <!--rendered="#usuariosBean.isAdmin}"-->
                     <p:commandButton type="button" value="dashBoard" icon="fa-dashboard" />
                 </f:facet>
                 <f:facet name="options">
-                    <p:commandButton type="button" value="Cerrar sesión" action="#{usuariosBean.borrarUsuario()}" icon="ui-icon-extlink" />
+                    <p:commandButton type="button" value="#{msg.mensaje_sesion_cer}" action="#{usuariosBean.borrarUsuario()}" icon="ui-icon-extlink" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -25,21 +25,21 @@
         <h:form>
             <p:menu>
                 <p:submenu label="Mi carrito">
-                    <p:menuitem value="Ver mi carrito" id="verCarrito" outcome="mostrarCarroCompra"  icon="fa-cart-plus" />
+                    <p:menuitem value="#{msg.mensaje_carrito_ver}" id="verCarrito" outcome="mostrarCarroCompra"  icon="fa-cart-plus" />
 
                 </p:submenu>
                 
                     <p:submenu label="Compras">                    
-                        <p:menuitem value="Historial de compras"  ajax="false" outcome="historialCompras" icon="fa-history"/>
+                        <p:menuitem value="#{msg.mensaje_compras_historial}"  ajax="false" outcome="historialCompras" icon="fa-history"/>
                     </p:submenu>
 
                     <p:submenu label="Productos">                    
-                        <p:menuitem value="Crear/modificar"  ajax="false" icon="fa-edit"/>
+                        <p:menuitem value="#{msg.mensaje_crear} / #{msg.mensaje_modificar}"  ajax="false" icon="fa-edit"/>
                     </p:submenu>
                
                 <p:submenu label="Perfil">
                     <p:menuitem value="Achmed" url="https://www.youtube.com/watch?v=IL357BrwK7c" icon="ui-icon-home"/>
-                    <p:menuitem value="Crear/modificar" outcome="login" icon="fa-sign-out"/>
+                    <p:menuitem value="#{msg.mensaje_crear} / #{msg.mensaje_modificar}" outcome="login" icon="fa-sign-out"/>
                     <p:menuitem value="Salir" outcome="login" icon="fa-sign-out"/>
                 </p:submenu>
             </p:menu>
@@ -48,11 +48,11 @@
     
             <p:dataTable var="usuario" value="#{usuariosBean.usuariosRegistrados}" rows="5" paginator="true">
                                 
-                              <p:column headerText="Id">
+                              <p:column headerText="#{msg.mensaje_id}">
                                     <h:outputText value="#{usuario.id}" />
                                 </p:column>
                               
-                                <p:column headerText="Nombre">
+                                <p:column headerText="#{msg.mensaje_nombre}">
                                     <h:outputText value="#{usuario.nombreUsuario}" />
                                 </p:column>
 
